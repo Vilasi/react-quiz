@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import QuizContextProvider from './store/quiz-context';
 
 import Header from './components/Header';
 import Quiz from './components/Quiz';
@@ -9,7 +10,9 @@ function App() {
   return (
     <main className="flex flex-col items-center">
       <Header />
-      <Quiz quiz={quiz} />
+      <QuizContextProvider>
+        <Quiz />
+      </QuizContextProvider>
     </main>
   );
 }
