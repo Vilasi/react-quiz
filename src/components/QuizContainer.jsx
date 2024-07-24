@@ -7,7 +7,7 @@ import Quiz from './Quiz';
 export default function QuizContainer() {
   const { quizStarted, quizFinished } = useContext(QuizContext);
 
-  console.log(quizStarted);
+
 
   let content = <StartingScreen />;
 
