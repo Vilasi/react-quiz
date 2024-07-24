@@ -3,11 +3,8 @@ import { QuizContext } from '../store/quiz-context';
 
 export default function StartingScreen() {
   const { handleStartQuiz } = useContext(QuizContext);
-  function handleClick() {
-    console.log('h1');
-  }
 
-  let content = (
+  return (
     <>
       <h2 className="text-4xl text-center text-stone-200 font-semibold mt-8 mb-4">
         Test your React knowledge!
@@ -29,6 +26,4 @@ export default function StartingScreen() {
       </button>
     </>
   );
-
-  return <>{content}</>;
 }

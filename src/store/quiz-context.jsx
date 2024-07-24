@@ -4,14 +4,14 @@ export const QuizContext = createContext({
   userAnswer: [],
   correctAnswer: [],
   quizStarted: Boolean,
+  quizFinished: Boolean,
   handleStartQuiz: () => {},
 });
 
 function quizReducer(state, action) {
   if (action.type === 'START_QUIZ') {
     return {
-      userAnswer: [...state.userAnswer],
-      correctAnswer: [...state.correctAnswer],
+      ...state,
       quizStarted: action.payload,
     };
   }
@@ -22,6 +22,7 @@ export default function QuizContextProvider({ children }) {
     userAnswer: [],
     correctAnswer: [],
     quizStarted: false,
+    quizFinished: false,
   });
 
   function handleStartQuiz() {
@@ -35,6 +36,7 @@ export default function QuizContextProvider({ children }) {
     userAnswer: quizState.userAnswer,
     correctAnswer: quizState.correctAnswer,
     quizStarted: quizState.quizStarted,
+    quizFinished: quizState.quizFinished,
     handleStartQuiz: handleStartQuiz,
   };
 

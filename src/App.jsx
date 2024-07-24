@@ -2,16 +2,14 @@ import { useState } from 'react';
 import QuizContextProvider from './store/quiz-context';
 
 import Header from './components/Header';
-import Quiz from './components/Quiz';
+import QuizContainer from './components/QuizContainer';
 
 function App() {
-  const [quiz, setQuiz] = useState(false);
-
   return (
     <main className="flex flex-col items-center">
       <Header />
       <QuizContextProvider>
-        <Quiz />
+        <QuizContainer />
       </QuizContextProvider>
     </main>
   );
