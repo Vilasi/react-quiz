@@ -1,5 +1,7 @@
 import { createContext, useReducer } from 'react';
 
+import questions from '../data/questions.js';
+
 //! Quiz Context Template
 export const QuizContext = createContext({
   userAnswer: [],
@@ -8,6 +10,7 @@ export const QuizContext = createContext({
   quizFinished: Boolean,
   handleStartQuiz: () => {},
   handleQuizFinished: () => {},
+  addUserAnswer: () => {},
 });
 
 //! useReducer function
@@ -25,13 +28,23 @@ function quizReducer(state, action) {
       quizFinished: action.payload,
     };
   }
+
+  if (action.type === 'ADD_ANSWER') {
+    const userAnswers = [...state.userAnswers];
+    userAnswers.push(action.payload);
+
+    return {
+      ...state,
+      userAnswers: userAnswers,
+    };
+  }
 }
 
 //! Start Context Function
 export default function QuizContextProvider({ children }) {
   const [quizState, quizDispatch] = useReducer(quizReducer, {
-    userAnswer: [],
-    correctAnswer: [],
+    userAnswers: [],
+    correctAnswer: questions.map((question) => question.answer),
     quizStarted: false,
     quizFinished: false,
   });
@@ -44,8 +57,8 @@ export default function QuizContextProvider({ children }) {
   }
 
   function handleQuizFinished(quizStatus) {
-    console.log('quizStatus');
-    console.log(quizStatus);
+    // console.log('quizStatus');
+    // console.log(quizStatus);
     if (quizStatus) {
       quizDispatch({
         type: 'FINISH_QUIZ',
@@ -54,13 +67,21 @@ export default function QuizContextProvider({ children }) {
     }
   }
 
+  function addUserAnswer(answer) {
+    quizDispatch({
+      type: 'ADD_ANSWER',
+      payload: answer,
+    });
+  }
+
   const contextValue = {
-    userAnswer: quizState.userAnswer,
+    userAnswers: quizState.userAnswers,
     correctAnswer: quizState.correctAnswer,
     quizStarted: quizState.quizStarted,
     quizFinished: quizState.quizFinished,
     handleStartQuiz: handleStartQuiz,
     handleQuizFinished: handleQuizFinished,
+    addUserAnswer: addUserAnswer,
   };
 
   return (
