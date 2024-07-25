@@ -1,7 +1,12 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { QuizContext } from '../store/quiz-context';
 
+import QuizButton from './QuizButton.jsx';
+import ProgressBar from './ProgressBar.jsx';
+
 import questions from '../data/questions.js';
+
+// const TIMER = 10000;
 
 export default function Quiz() {
   const {
@@ -12,39 +17,45 @@ export default function Quiz() {
     addUserAnswer,
   } = useContext(QuizContext);
 
-  // console.log('correctAnswer');
-  // console.log(correctAnswer);
+  const TIMER = 10000;
 
-  const questionOptions = questions.map((question) => {
+  const questionAnswerOptions = questions.map((question) => {
     return [...question.options];
   });
+  const currentQuestionIndex = userAnswers.length < 10 ? userAnswers.length : 9;
 
-  // console.log('questionOptions');
-  // console.log(questionOptions);
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      addUserAnswer(null);
+    }, TIMER);
 
-  const currentQuestion = userAnswers.length;
-  // console.log(currentQuestion);
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [userAnswers]);
 
-  console.log('userAnswer');
   console.log(userAnswers);
-
-  // console.log('questions[currentQuestion].options[currentQuestion]');
-  // console.log(questions[4].options[4]);
-
-  // console.log('questions');
-  // console.log(questions);
+  // console.log(TIMER);
 
   return (
     <>
-      <h2>{questions[currentQuestion].question}</h2>
-      <button onClick={() => handleQuizFinished(true)}>Finish Game</button>
-      {questionOptions[currentQuestion].map((question) => {
+      <h2 className="text-2xl text-stone-300 max-width-prose text-center my-8 mx-2">
+        {questions[currentQuestionIndex].question}
+      </h2>
+
+      {/** Quiz Buttons */}
+      {questionAnswerOptions[currentQuestionIndex].map((question) => {
         return (
-          <button onClick={(e) => addUserAnswer(e.target.textContent)}>
+          <QuizButton
+            key={question}
+            onClick={(e) => addUserAnswer(e.target.textContent)}
+          >
             {question}
-          </button>
+          </QuizButton>
         );
       })}
+
+      <ProgressBar timer={TIMER} />
     </>
   );
 }
