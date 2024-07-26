@@ -1,20 +1,28 @@
 import { useEffect, useState } from 'react';
 
-export default function ProgressBar({ timer }) {
+export default function ProgressBar({ timer, userAnswers }) {
   const [remainingTime, setRemainingTime] = useState(timer);
 
   //   console.log(remainingTime);
-  console.log(timer);
+  // console.log(timer);
 
   useEffect(() => {
+    console.log('Effect mounted');
     const intervalId = setInterval(() => {
-      setRemainingTime((prevTime) => Math.max(prevTime - 20, 0));
+      setRemainingTime((prevTime) => Math.max(prevTime - 17, 0));
     }, 10);
 
     return () => {
+      setRemainingTime(timer);
       clearInterval(intervalId);
     };
-  }, []);
+  }, [userAnswers]);
 
-  return <progress value={remainingTime} max={timer} />;
+  return (
+    <progress
+      className="w-2/4 rounded-full my-8"
+      value={remainingTime}
+      max={timer}
+    />
+  );
 }

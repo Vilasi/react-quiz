@@ -6,18 +6,16 @@ import ProgressBar from './ProgressBar.jsx';
 
 import questions from '../data/questions.js';
 
-// const TIMER = 10000;
+const TIMER = 10000;
 
 export default function Quiz() {
   const {
     handleQuizFinished,
     quizFinished,
     userAnswers,
-    correctAnswer,
+    correctAnswers,
     addUserAnswer,
   } = useContext(QuizContext);
-
-  const TIMER = 10000;
 
   const questionAnswerOptions = questions.map((question) => {
     return [...question.options];
@@ -34,12 +32,18 @@ export default function Quiz() {
     };
   }, [userAnswers]);
 
-  console.log(userAnswers);
+  console.log('userAnswers.length');
+  console.log(userAnswers.length);
   // console.log(TIMER);
+
+  if (userAnswers.length === 10) {
+    handleQuizFinished(true);
+  }
 
   return (
     <>
-      <h2 className="text-2xl text-stone-300 max-width-prose text-center my-8 mx-2">
+      <ProgressBar timer={TIMER} userAnswers={userAnswers} />
+      <h2 className="text-2xl text-stone-300 max-width-prose text-center mb-8 mx-2">
         {questions[currentQuestionIndex].question}
       </h2>
 
@@ -54,8 +58,6 @@ export default function Quiz() {
           </QuizButton>
         );
       })}
-
-      <ProgressBar timer={TIMER} />
     </>
   );
 }

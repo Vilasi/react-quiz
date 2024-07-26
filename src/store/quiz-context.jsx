@@ -4,8 +4,8 @@ import questions from '../data/questions.js';
 
 //! Quiz Context Template
 export const QuizContext = createContext({
-  userAnswer: [],
-  correctAnswer: [],
+  userAnswers: [],
+  correctAnswers: [],
   quizStarted: Boolean,
   quizFinished: Boolean,
   handleStartQuiz: () => {},
@@ -18,13 +18,16 @@ function quizReducer(state, action) {
   if (action.type === 'START_QUIZ') {
     return {
       ...state,
+      userAnswers: [],
       quizStarted: action.payload,
+      quizFinished: !action.payload,
     };
   }
 
   if (action.type === 'FINISH_QUIZ') {
     return {
       ...state,
+      quizStarted: !action.payload,
       quizFinished: action.payload,
     };
   }
@@ -44,7 +47,7 @@ function quizReducer(state, action) {
 export default function QuizContextProvider({ children }) {
   const [quizState, quizDispatch] = useReducer(quizReducer, {
     userAnswers: [],
-    correctAnswer: questions.map((question) => question.answer),
+    correctAnswers: questions.map((question) => question.answer),
     quizStarted: false,
     quizFinished: false,
   });
@@ -76,7 +79,7 @@ export default function QuizContextProvider({ children }) {
 
   const contextValue = {
     userAnswers: quizState.userAnswers,
-    correctAnswer: quizState.correctAnswer,
+    correctAnswers: quizState.correctAnswers,
     quizStarted: quizState.quizStarted,
     quizFinished: quizState.quizFinished,
     handleStartQuiz: handleStartQuiz,
