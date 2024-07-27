@@ -10,6 +10,7 @@ export default {
       },
       backgroundColor: {
         'quiz-results': '#9082a3',
+        'quiz-result-numbers': '#191321',
       },
     },
   },

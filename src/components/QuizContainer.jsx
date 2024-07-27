@@ -6,7 +6,10 @@ import Quiz from './Quiz';
 import QuizResults from './QuizResults';
 
 export default function QuizContainer() {
-  const { quizStarted, quizFinished } = useContext(QuizContext);
+  const { quizStarted, quizFinished, userAnswers } = useContext(QuizContext);
+
+  console.log('userAnswers');
+  console.log(userAnswers);
 
   let content = <StartingScreen />;
 

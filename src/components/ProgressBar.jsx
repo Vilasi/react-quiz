@@ -7,7 +7,7 @@ export default function ProgressBar({ timer, userAnswers }) {
   // console.log(timer);
 
   useEffect(() => {
-    console.log('Effect mounted');
+    // console.log('Effect mounted');
     const intervalId = setInterval(() => {
       setRemainingTime((prevTime) => Math.max(prevTime - 17, 0));
     }, 10);

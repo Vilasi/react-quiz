@@ -32,13 +32,15 @@ export default function Quiz() {
     };
   }, [userAnswers]);
 
-  console.log('userAnswers.length');
-  console.log(userAnswers.length);
+  // console.log('userAnswers.length');
+  // console.log(userAnswers.length);
   // console.log(TIMER);
 
-  if (userAnswers.length === 10) {
-    handleQuizFinished(true);
-  }
+  useEffect(() => {
+    if (userAnswers.length === 10) {
+      handleQuizFinished(true);
+    }
+  }, [userAnswers]);
 
   return (
     <>
